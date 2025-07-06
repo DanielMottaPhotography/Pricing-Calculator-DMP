@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commercial Photography Pricing Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f9;
+      padding: 40px;
+      color: #3a515c;
+    }
+    .calculator-container {
+      background: #ffffff;
+      max-width: 700px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border-top: 8px solid #928a4d;
+    }
+    h2 {
+      color: #517a8c;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+    select, input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f2f2f2;
+      color: #3a515c;
+    }
+    button {
+      background: #517a8c;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background: #3a515c;
+    }
+    .result {
+      margin-top: 30px;
+      background: #f0f0f0;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 18px;
+      color: #3a515c;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator-container">
+    <h2>Commercial Photography Estimate</h2>
+    <label for="imageCount">Number of Final Images</label>
+    <input type="number" id="imageCount" min="1" value="5" />
+
+    <label for="usage">Usage Type</label>
+    <select id="usage">
+      <option value="1">Web/Social Only</option>
+      <option value="1.5">Web + Print</option>
+      <option value="2">National Campaign</option>
+      <option value="2.5">Full Commercial/Buyout</option>
+    </select>
+
+    <label for="reach">Geographic Use</label>
+    <select id="reach">
+      <option value="1">Local/Regional</option>
+      <option value="1.5">National</option>
+      <option value="2">International</option>
+    </select>
+
+    <label for="duration">License Duration</label>
+    <select id="duration">
+      <option value="1">1 Year</option>
+      <option value="1.25">2 Years</option>
+      <option value="1.5">5 Years</option>
+      <option value="2">Perpetual</option>
+    </select>
+
+    <label for="delivery">Delivery Speed</label>
+    <select id="delivery">
+      <option value="1">Standard (3–7 Business Days)</option>
+      <option value="1.25">Rush (1–2 Days)</option>
+    </select>
+
+    <button onclick="calculatePrice()">Estimate Pricing</button>
+
+    <div class="result" id="result">Enter your details above and click Estimate Pricing to see a cost range.</div>
+  </div>
+
+  <script>
+    function calculatePrice() {
+      const baseRatePerImage = 250;
+      const count = parseInt(document.getElementById('imageCount').value);
+      const usage = parseFloat(document.getElementById('usage').value);
+      const reach = parseFloat(document.getElementById('reach').value);
+      const duration = parseFloat(document.getElementById('duration').value);
+      const delivery = parseFloat(document.getElementById('delivery').value);
+
+      if (isNaN(count) || count < 1) {
+        document.getElementById('result').innerHTML = "Please enter a valid number of images.";
+        return;
+      }
+
+      const multiplier = usage * reach * duration * delivery;
+      const low = baseRatePerImage * 0.9 * multiplier * count;
+      const high = baseRatePerImage * 1.3 * multiplier * count;
+
+      document.getElementById('result').innerHTML =
+        `Estimated Price Range:<br><strong>$${low.toFixed(2)}</strong> – <strong>$${high.toFixed(2)}</strong><br><br>` +
+        `<small>This estimate includes licensing, usage, and delivery factors. Final pricing may vary based on creative direction, location, or retouching needs.</small>`;
+    }
+  </script>
+</body>
+</html>
